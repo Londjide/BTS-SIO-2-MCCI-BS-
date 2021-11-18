@@ -1,5 +1,8 @@
 package myHash;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -63,15 +66,44 @@ public class Hash
 
 	public static String ALGO = algoDeChiffrement();
 
-	public static void file2Hash(String Pathfile) {
+	public static void printText() {
+		ChoixDuFichier xFile = new ChoixDuFichier();
 		try {
+			ChoixDuFichier.ChoixFichier();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-			RandomAccessFile readData = new RandomAccessFile(Pathfile, "r");
+		try (BufferedReader LectureFile = new BufferedReader(new FileReader(ChoixDuFichier.pathFile()))) {
+			String line;
+			while ((line = LectureFile.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (IOException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
+	}
+
+	public static void file2Hash(String pathfile) {
+		try {
+//			ChoixDuFichier xFile = new ChoixDuFichier();
+//			xFile.ChoixFichier();
+//			String cheminFile = ChoixDuFichier.pathFile();
+			printText();
+
+			RandomAccessFile readData = new RandomAccessFile(ChoixDuFichier.pathFile(), "r");
+//			System.out.println("myFile: " + readData.toString());
+
 			byte[] donneeOctet = new byte[(int) readData.length()];
 			MessageDigest monHash = MessageDigest.getInstance(ALGO);
 			monHash.update(donneeOctet);
 
 			byte[] condenser = monHash.digest();
+
+			System.out.printf("Le Texte suivant est de %d caractère : \n \n %s \n", readData.length(),
+					readData.toString());
 			System.out.printf("\n Algo de Hachage " + ALGO + " du texte: " + "(" + condenser.length + " octets)\n");
 			System.out.println("****** Affichage du condensé ****** \n");
 
@@ -103,8 +135,9 @@ public class Hash
 		System.out.println(reponse);
 
 		if (reponse == 1) {
-
 			text2Hash(ALGO);
+		} else if (reponse == 2) {
+			file2Hash(ALGO);
 		}
 
 	}

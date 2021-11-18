@@ -33,7 +33,7 @@ public class ChoixDuFichier {
 		}
 	}
 
-	public String pathFile() {
+	public static String pathFile() {
 		return fichier.getPath();
 	}
 
