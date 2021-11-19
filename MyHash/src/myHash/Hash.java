@@ -26,17 +26,19 @@ public class Hash
 		return algo;
 	}
 
-	public static void text2Hash(String algo) {
+	public static String ALGO = algoDeChiffrement();
+
+	public static void text2Hash(String ALGO) {
 
 		String chaine;
 		Scanner src = new Scanner(System.in);
 		System.out.println("Saisir le texte à hacher : ");
 		chaine = src.nextLine();
 
-		do {
-			System.out.println("Tapez au moins un caractère : ");
-
-		} while (chaine == null || chaine.length() < 1);
+//		do {
+//			System.out.println("Tapez au moins un caractère : ");
+//
+//		} while (chaine == null || chaine.length() < 1);
 
 		src.close();
 
@@ -44,11 +46,12 @@ public class Hash
 
 		try {
 			byte[] donneeOctet = chaine.getBytes();
-			MessageDigest monHash = MessageDigest.getInstance(algo);
+			System.out.println(donneeOctet);
+			MessageDigest monHash = MessageDigest.getInstance(ALGO);
 			monHash.update(donneeOctet);
-
 			byte[] condenser = monHash.digest();
-			System.out.printf("\n Algo de Hachage " + algo + " du texte: " + "(" + condenser.length + " octets)\n");
+			System.out.println(condenser);
+			System.out.printf("\n Algo de Hachage " + ALGO + " du texte: " + "(" + condenser.length + " octets)\n");
 			System.out.println("****** Affichage du condensé ****** \n");
 
 			for (int i = 0; i < condenser.length; i++) {
@@ -63,8 +66,6 @@ public class Hash
 		}
 
 	}
-
-	public static String ALGO = algoDeChiffrement();
 
 	public static void printText() {
 		ChoixDuFichier xFile = new ChoixDuFichier();
