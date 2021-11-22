@@ -46,7 +46,7 @@ public class ChoixDuFichier {
 //		return null;
 //	}
 
-	public File getFile() {
+	public static File getFile() {
 		// TODO Auto-generated method stub
 		return fichier;
 	}

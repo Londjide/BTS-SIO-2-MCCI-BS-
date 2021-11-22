@@ -123,23 +123,28 @@ public class Hash
 
 //	EssaieChoixFichier ChoixFichier = new EssaieChoixFichier();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		System.out.println("Hello World ! \n Que souhaitez vous faire ? \n");
+//		System.out.println("Hello World ! \n Que souhaitez vous faire ? \n");
+//
+//		Scanner src = new Scanner(System.in);
+//
+//		System.out.println("Choix 1 : \n  Hacher la Phrase de votre choix?\n \t Ou \n "
+//				+ "Choix 2 : \n Hacher un Fichier contenue depuis votre poste?");
+//		reponse = src.nextInt();
+//
+//		System.out.println(reponse);
+//
+//		if (reponse == 1) {
+//			text2Hash(ALGO);
+//		} else if (reponse == 2) {
+//			file2Hash(ALGO);
+//		}
 
-		Scanner src = new Scanner(System.in);
-
-		System.out.println("Choix 1 : \n  Hacher la Phrase de votre choix?\n \t Ou \n "
-				+ "Choix 2 : \n Hacher un Fichier contenue depuis votre poste?");
-		reponse = src.nextInt();
-
-		System.out.println(reponse);
-
-		if (reponse == 1) {
-			text2Hash(ALGO);
-		} else if (reponse == 2) {
-			file2Hash(ALGO);
-		}
-
+		ApiRSA generateKeyPair = new ApiRSA();
+		ApiRSA.generateKeyPair();
+		System.out.println(generateKeyPair);
+//		ApiRSA.sign(ALGO, SHA256);
 	}
+
 }

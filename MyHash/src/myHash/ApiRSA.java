@@ -16,6 +16,7 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.Signature;
 import java.util.Base64;
+import java.util.Scanner;
 
 public class ApiRSA {
 
@@ -38,11 +39,12 @@ public class ApiRSA {
 		KeyPair rsaKey = generator.generateKeyPair(); // la pair de clé (PK, SK) est généree
 
 		return rsaKey;
+
 	}
 
 	/**
-	 * Cette méthode effectue un hash sur une chaine et la signe avec une clé
-	 * privée SK son appel dans une autre classe se fait par ApiRSA.sign(..)
+	 * Cette méthode effectue un hash sur une chaine et la signe avec une clé privée
+	 * SK son appel dans une autre classe se fait par ApiRSA.sign(..)
 	 * 
 	 * @param texteClair : le texte à signer
 	 * @param priveSK    : la clé privée SK qui doit au préalable être généré
@@ -62,14 +64,15 @@ public class ApiRSA {
 		byte[] signature = privateSignature.sign(); // récupère la signature sous forme d'octets
 
 		return Base64.getEncoder().encodeToString(signature); // retourne la signature au format chaine
+
 	}
 
 	/**
-	 * Cette méthode vérifie qu'un text clair n'a pas été modifié après avoir
-	 * été signé son appel dans une autre classe se fait par ApiRSA.verify(..)
+	 * Cette méthode vérifie qu'un text clair n'a pas été modifié après avoir été
+	 * signé son appel dans une autre classe se fait par ApiRSA.verify(..)
 	 * 
 	 * @param texteClair: le texte à vérifier
-	 * @param signature   : la signature du tecte calculé précédemment
+	 * @param signature   : la signature du texte calculé précédemment
 	 * @param publicPK    : la clé publique PK de l'auteur
 	 * @return : retourn vrai si c'est bon
 	 * @throws Exception: si tamtam
@@ -86,6 +89,31 @@ public class ApiRSA {
 		byte[] signatureOctets = Base64.getDecoder().decode(signature); // encode en octet la signature candidate
 
 		return publicSignature.verify(signatureOctets); // vérifie les 2 signatures et retourne vrai si ok
+	}
+
+	public static String text2Singn() {
+		Scanner src = new Scanner(System.in);
+		System.out.println("Veuillez composer le texte à hacher !");
+		String text = src.nextLine();
+		src.close();
+		return text;
+	}
+
+	public static String text2test() {
+		Scanner src = new Scanner(System.in);
+		System.out.println("Veuillez composer le texte à hacher !");
+		String text = src.nextLine();
+		src.close();
+		return text;
+	}
+
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+
+		KeyPair sk = generateKeyPair();
+		String signature = sign(text2test(), sk.getPrivate());
+		System.out.println(verify(text2Singn(), signature, sk.getPublic()));
+
 	}
 
 }
